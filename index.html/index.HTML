@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أوقات الصلاة وأذكار</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        body {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            text-align: center;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 50px 0;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            width: 100%;
+            max-width: 45%;
+            flex: 1;
+            margin: 10px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 32px;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 24px;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            color: #28a745;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            outline: none;
+            font-size: 18px;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            margin: 10px 5px;
+            text-align: center;
+        }
+
+        input:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 8px rgba(40, 167, 69, 0.6);
+        }
+
+        button {
+            padding: 15px 30px;
+            margin: 20px 0;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 18px;
+        }
+
+        button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        .counter-button {
+            padding: 5px 10px;
+            margin-left: 5px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .counter-button:hover {
+            background-color: #218838;
+        }
+
+        #prayer-times {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        #prayer-times p {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            font-size: 18px;
+        }
+
+        #prayer-times p:hover {
+            transform: scale(1.05);
+            background-color: #e0f7fa;
+        }
+
+        #prayer-times span {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .section div {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .counter-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+
+        .separator {
+            border-top: 2px solid #28a745;
+            margin: 40px 0;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .row div {
+            flex: 1;
+            padding: 10px;
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+
+        iframe {
+            border: none;
+            width: 100%;
+            height: 500px;
+            border-radius: 10px;
+        }
+
+        .question-box {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .question-box:hover {
+            background-color: #e0f7fa;
+        }
+
+        .answer-box {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #e9ecef;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+
+        .date-container {
+            margin: 20px 0;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .hadith-container, .tip-container, .dua-container {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.6;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+        .hadith-container::before, .tip-container::before, .dua-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: #28a745;
+            transition: height 0.3s ease;
+        }
+
+        .hadith-container:hover::before, .tip-container:hover::before, .dua-container:hover::before {
+            height: 100%;
+        }
+
+        .hadith-container:hover, .tip-container:hover, .dua-container:hover {
+            background-color: #e0f7fa;
+        }
+    </style>
+</head>
+<body>
+    <h1>أوقات الصلاة وأذكار</h1>
+    <div class="date-container">
+        <span id="gregorian-date"></span> | <span id="hijri-date"></span>
+    </div>
+    <div class="container">
+        <div class="section">
+            <h2>أذكار الصباح والمساء</h2>
+            <h3>أذكار الصباح</h3>
+            <div>
+                <div class="counter-container">
+                    <button class="counter-button" onclick="decrementCounter('morning-counter-1')">-</button>
+                    <input type="number" id="morning-counter-1" value="100" min="0" max="100">
+                    <button class="counter-button" onclick="incrementCounter('morning-counter-1')">+</button>
+                </div>
+                <p>اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك النشور</p>
+                <hr>
+                <div class="counter-container">
+                    <button class="counter-button" onclick="decrementCounter('morning-counter-2')">-</button>
+                    <input type="number" id="morning-counter-2" value="100" min="0" max="100">
+                    <button class="counter-button" onclick="incrementCounter('morning-counter-2')">+</button>
+                </div>
+                <p>أَصْبَحْنا وَأَصْبَحَ المُلْكُ لله وَالحَمدُ لله، لا إلهَ إلاّ اللّهُ وَحدَهُ لا شَريكَ لهُ، لهُ المُلكُ ولهُ الحَمْد، وهُوَ على كلّ شَيءٍ قدير، رَبِّ أسْأَلُكَ خَيرَ ما في هذا اليوم وَخَيرَ ما بَعْدَه، وَأَعوذُ بِكَ مِنْ شرِّ ما في هذا اليوم وَشَرِّ ما بَعْدَه، رَبِّ أَعوذُ بِكَ مِنَ الْكَسَلِ وَسوءِ الْكِبَر، رَبِّ أَعوذُ بِكَ مِنْ عَذابٍ في النّارِ وَعَذابٍ في القَبْر</p>
+                <hr>
+                <div class="counter-container">
+                    <button class="counter-button" onclick="decrementCounter('morning-counter-3')">-</button>
+                    <input type="number" id="morning-counter-3" value="100" min="0" max="100">
+                    <button class="counter-button" onclick="incrementCounter('morning-counter-3')">+</button>
+                </div>
+                <p>اللّهُمَّ بِكَ أَصْبَحْنا وَبِكَ أَمْسَينا، وَبِكَ نَحْيا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُور</p>
+                <hr>
+                <div class="counter-container">
+                    <button class="counter-button" onclick="decrementCounter('morning-counter-4')">-</button>
+                    <input type="number" id="morning-counter-4" value="100" min="0" max="100">
+                    <button class="counter-button" onclick="incrementCounter('morning-counter-4')">+</button>
+                </div>
+                <p>أَصْبَحْنا عَلَى فِطْرَةِ الإسْلاَمِ، وَعَلَى كَلِمَةِ الإِخْلاَصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ، وَعَلَى مِلَّةِ أَبِينَا إبْرَاهِيمَ حَنِيفاً مُسْلِماً وَمَا كَانَ مِنَ المُشْرِكِينَ</p>
+            </div>
+
+            <div class="separator"></div> <!-- Separator between morning and evening athkar -->
+
+            <h3>أذكار المساء</h3>
+            <div>
+                <div class="counter-container">
+                    <button class="counter-button" onclick="decrementCounter('evening-counter-1')">-</button>
+                    <input type="number" id="evening-counter-1" value="100" min="0" max="100">
+                    <button class="counter-button" onclick="incrementCounter('evening-counter-1')">+</button>
+                </div>
+                <p>اللهم بك أمسينا وبك أصبحنا وبك نحيا وبك نموت وإليك المصير</p>
+                <hr>
+                <div class="counter-container">
+                    <button class="counter-button" onclick="decrementCounter('evening-counter-2')">-</button>
+                    <input type="number" id="evening-counter-2" value="100" min="0" max="100">
+                    <button class="counter-button" onclick="incrementCounter('evening-counter-2')">+</button>
+                </div>
+                <p>أَصْبَحْنا وَأَصْبَحَ المُلْكُ لله وَالحَمدُ لله، لا إلهَ إلاّ اللّهُ وَحدَهُ لا شَريكَ لهُ، لهُ المُلكُ ولهُ الحَمْد، وهُوَ على كلّ شَيءٍ قدير، رَبِّ أسْأَلُكَ خَيرَ ما في هذا اليوم وَخَيرَ ما بَعْدَه، وَأَعوذُ بِكَ مِنْ شرِّ ما في هذا اليوم وَشَرِّ ما بَعْدَه، رَبِّ أَعوذُ بِكَ مِنَ الْكَسَلِ وَسوءِ الْكِبَر، رَبِّ أَعوذُ بِكَ مِنْ عَذابٍ في النّارِ وَعَذابٍ في القَبْر</p>
+                <hr>
+                <div class="counter-container">
+                    <button class="counter-button" onclick="decrementCounter('evening-counter-3')">-</button>
+                    <input type="number" id="evening-counter-3" value="100" min="0" max="100">
+                    <button class="counter-button" onclick="incrementCounter('evening-counter-3')">+</button>
+                </div>
+                <p>اللّهُمَّ بِكَ أَصْبَحْنا وَبِكَ أَمْسَينا، وَبِكَ نَحْيا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُور</p>
+                <hr>
+                <div class="counter-container">
+                    <button class="counter-button" onclick="decrementCounter('evening-counter-4')">-</button>
+                    <input type="number" id="evening-counter-4" value="100" min="0" max="100">
+                    <button class="counter-button" onclick="incrementCounter('evening-counter-4')">+</button>
+                </div>
+                <p>أَصْبَحْنا عَلَى فِطْرَةِ الإسْلاَمِ، وَعَلَى كَلِمَةِ الإِخْلاَصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ، وَعَلَى مِلَّةِ أَبِينَا إبْرَاهِيمَ حَنِيفاً مُسْلِماً وَمَا كَانَ مِنَ المُشْرِكِينَ</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>أوقات الصلاة</h2>
+            <label for="city">المدينة:</label>
+            <input type="text" id="city" placeholder="أدخل اسم المدينة">
+            
+            <label for="country">البلد:</label>
+            <input type="text" id="country" placeholder="أدخل اسم البلد">
+            
+            <button onclick="getPrayerTimes()">عرض أوقات الصلاة</button>
+            
+            <div id="prayer-times"></div>
+        </div>
+
+        <div class="section">
+            <h2>السنن الرواتب</h2>
+            <div class="row">
+                <div>
+                    <h3>قبل الفجر:</h3>
+                    <p>ركعتان</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div>
+                    <h3>قبل الظهر:</h3>
+                    <p>أربع ركعات</p>
+                </div>
+                <div>
+                    <h3>بعد الظهر:</h3>
+                    <p>ركعتان</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div>
+                    <h3>بعد المغرب:</h3>
+                    <p>ركعتان</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div>
+                    <h3>بعد العشاء:</h3>
+                    <p>ركعتان</p>
+                </div>
+            </div>
+            <hr>
+            <h2>اتجاه القبلة</h2>
+            <iframe src="https://onlinecompass.net/qibla-finder"></iframe>
+        </div>
+    </div>
+
+    <div class="tip-container" id="daily-tip">
+        <!-- سيتم إضافة النصيحة الإسلامية اليومية هنا -->
+    </div>
+
+    <div class="hadith-container" id="daily-hadith">
+        <!-- سيتم إضافة الحديث النبوي اليومي هنا -->
+    </div>
+
+    <div class="dua-container" id="daily-dua">
+        <!-- سيتم إضافة الدعاء اليومي هنا -->
+    </div>
+
+    <div class="question-box" id="daily-question" onclick="toggleAnswer()">
+        <!-- سيتم إضافة السؤال الديني اليومي هنا -->
+    </div>
+    <div class="answer-box" id="daily-answer">
+        <!-- سيتم إضافة الإجابة هنا -->
+    </div>
+
+    <footer>
+        © 2024 sauddzz. All rights reserved.
+    </footer>
+
+    <script>
+        const cityInput = document.getElementById('city');
+        const countryInput = document.getElementById('country');
+
+        cityInput.addEventListener('input', function() {
+            if (this.value) {
+                this.style.transform = 'scale(1.05)';
+            } else {
+                this.style.transform = 'scale(1)';
+            }
+        });
+
+        countryInput.addEventListener('input', function() {
+            if (this.value) {
+                this.style.transform = 'scale(1.05)';
+            } else {
+                this.style.transform = 'scale(1)';
+            }
+        });
+
+        async function getPrayerTimes() {
+            const city = cityInput.value;
+            const country = countryInput.value;
+            
+            if (city === '' || country === '') {
+                alert('الرجاء إدخال المدينة والبلد.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=2`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                const timings = data.data.timings;
+
+                let output = `<h2>أوقات الصلاة في ${city}, ${country}</h2>`;
+                for (const [prayer, time] of Object.entries(timings)) {
+                    output += `<p>${prayer}: <span>${time}</span></p>`;
+                }
+
+                document.getElementById('prayer-times').innerHTML = output;
+            } catch (error) {
+                alert('حدث خطأ أثناء جلب أوقات الصلاة. حاول مرة أخرى.');
+                console.error('Error:', error);
+            }
+        }
+
+        function incrementCounter(id) {
+            const counterElement = document.getElementById(id);
+            let count = parseInt(counterElement.value);
+            if (count < 100) {
+                counterElement.value = count + 1;
+            }
+        }
+
+        function decrementCounter(id) {
+            const counterElement = document.getElementById(id);
+            let count = parseInt(counterElement.value);
+            if (count > 0) {
+                counterElement.value = count - 1;
+            }
+        }
+
+        const questions = [
+            { question: "ما هي أركان الإسلام الخمسة؟", answer: "الشهادتان، الصلاة، الزكاة، الصوم، الحج" },
+            { question: "ما هي السورة التي تُسمى عروس القرآن؟", answer: "سورة الرحمن" },
+            { question: "ما هو الركن الأول من أركان الإيمان؟", answer: "الإيمان بالله" },
+            { question: "كم عدد سور القرآن الكريم؟", answer: "114 سورة" },
+            { question: "ما هي أطول سورة في القرآن الكريم؟", answer: "سورة البقرة" }
+        ];
+
+        function getDailyQuestion() {
+            const questionBox = document.getElementById('daily-question');
+            const answerBox = document.getElementById('daily-answer');
+            const date = new Date();
+            const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+            const dailyQA = questions[dayOfYear % questions.length];
+            questionBox.innerText = dailyQA.question;
+            answerBox.innerText = dailyQA.answer;
+        }
+
+        function toggleAnswer() {
+            const answerBox = document.getElementById('daily-answer');
+            if (answerBox.style.display === 'none' || answerBox.style.display === '') {
+                answerBox.style.display = 'block';
+            } else {
+                answerBox.style.display = 'none';
+            }
+        }
+
+        const hadiths = [
+            "قال رسول الله ﷺ: \"إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى...\"",
+            "قال رسول الله ﷺ: \"من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت...\"",
+            "قال رسول الله ﷺ: \"المسلم من سلم المسلمون من لسانه ويده...\"",
+            "قال رسول الله ﷺ: \"لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه...\"",
+            "قال رسول الله ﷺ: \"الدين النصيحة. قلنا: لمن؟ قال: لله، ولكتابه، ولرسوله، ولأئمة المسلمين وعامتهم...\""
+        ];
+
+        function getDailyHadith() {
+            const hadithContainer = document.getElementById('daily-hadith');
+            const date = new Date();
+            const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+            const dailyHadith = hadiths[dayOfYear % hadiths.length];
+            hadithContainer.innerText = dailyHadith;
+        }
+
+        const tips = [
+            "احرص على قراءة القرآن يوميًا لتقوية علاقتك بالله.",
+            "الصلاة في وقتها تنظم حياتك وتقربك من الله.",
+            "الصدقة تطهر المال وتزيد البركة.",
+            "اذكر الله كثيرًا وتوكل عليه في كل أمورك.",
+            "احسن إلى الناس لتكسب محبة الله ومحبتهم."
+        ];
+
+        function getDailyTip() {
+            const tipContainer = document.getElementById('daily-tip');
+            const date = new Date();
+            const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+            const dailyTip = tips[dayOfYear % tips.length];
+            tipContainer.innerText = dailyTip;
+        }
+
+        const duas = [
+            "اللهم إني أسألك العفو والعافية في الدنيا والآخرة.",
+            "اللهم اهدني وسددني، اللهم إني أسألك الهدى والسداد.",
+            "اللهم إني أعوذ بك من الهم والحزن، والعجز والكسل، والجبن والبخل، وضلع الدين وغلبة الرجال.",
+            "اللهم إني أسألك الجنة وما قرب إليها من قول أو عمل، وأعوذ بك من النار وما قرب إليها من قول أو عمل.",
+            "اللهم إني أعوذ بك من زوال نعمتك، وتحول عافيتك، وفجاءة نقمتك، وجميع سخطك."
+        ];
+
+        function getDailyDua() {
+            const duaContainer = document.getElementById('daily-dua');
+            const date = new Date();
+            const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+            const dailyDua = duas[dayOfYear % duas.length];
+            duaContainer.innerText = dailyDua;
+        }
+
+        function getHijriDate() {
+            const today = new Date();
+            const hijriDate = new Intl.DateTimeFormat('ar-TN-u-ca-islamic', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).format(today);
+            return hijriDate;
+        }
+
+        function getGregorianDate() {
+            const today = new Date();
+            const gregorianDate = new Intl.DateTimeFormat('ar-EG', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).format(today);
+            return gregorianDate;
+        }
+
+        function displayDates() {
+            const hijriDateElement = document.getElementById('hijri-date');
+            const gregorianDateElement = document.getElementById('gregorian-date');
+            hijriDateElement.textContent = getHijriDate();
+            gregorianDateElement.textContent = getGregorianDate();
+        }
+
+        displayDates();
+        getDailyQuestion();
+        getDailyHadith();
+        getDailyTip();
+        getDailyDua();
+    </script>
+</body>
+</html>
